@@ -297,6 +297,19 @@ void Graphics::PutPixel( int x,int y,Color c )
 }
 
 
+void Graphics::DrawRect(int x, int y, int width = 20, int height = 20, Color color = Colors::White)
+{
+	for (int w = x; w < width + x; w++)
+	{
+		for (int h = y; h < height + y; h++)
+		{
+			PutPixel(w, h, color);
+		}
+	}
+}
+
+
+
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
