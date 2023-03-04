@@ -14,42 +14,42 @@ void Enemy::Draw(Graphics& gfx) const
 void Enemy::Update()
 {
 	assert(initialized);
-	x += v_x;
-	y += v_y;
+	pos.x += v_x;
+	pos.y += v_y;
 
-	const int enemyright = x + width;
-	const int enemybottom = y + height;
+	const int enemyright = pos.x + width;
+	const int enemybottom = pos.y + height;
 
-	if (x < 0)
+	if (pos.x < 0)
 	{
-		x = 0;
+		pos.x = 0;
 		v_x = -v_x;
 	}
 	if (enemyright > Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth -1 - width;
+		pos.x = Graphics::ScreenWidth -1 - width;
 		v_x = -v_x;
 	}
-	if (y < 0)
+	if (pos.y < 0)
 	{
-		y = 0;
+		pos.y = 0;
 		v_y = -v_y;
 	}
 	if (enemybottom > Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - 1 - height;
+		pos.y = Graphics::ScreenHeight - 1 - height;
 		v_y = -v_y;
 	}
 }
 
 int Enemy::X() const
 {
-	return this->x;
+	return this->pos.x;
 }
 
 int Enemy::Y() const
 {
-	return this->y;
+	return this->pos.y;
 }
 
 int Enemy::Width() const
@@ -69,29 +69,29 @@ Color Enemy::GetColor() const
 
 void Enemy::Clamp()
 {
-	if (x + width > Graphics::ScreenWidth)
+	if (pos.x + width > Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth - width - 1;
+		pos.x = Graphics::ScreenWidth - width - 1;
 	}
-	if (x < 0)
+	if (pos.x < 0)
 	{
-		x = 0;
+		pos.x = 0;
 	}
-	if (y + height > Graphics::ScreenHeight)
+	if (pos.y + height > Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - height - 1;
+		pos.y = Graphics::ScreenHeight - height - 1;
 	}
-	if (y < 0)
+	if (pos.y < 0)
 	{
-		y = 0;
+		pos.y = 0;
 	}
 }
 
 void Enemy::Init( int xPos, int yPos, int xVel, int yVel )
 {
 	assert( !initialized );
-	x = xPos;
-	y = yPos;
+	pos.x = xPos;
+	pos.y = yPos;
 	v_x = xVel;
 	v_y = yVel;
 	initialized = true;
@@ -101,11 +101,11 @@ bool Enemy::Collision(const Player& player)
 {
 	const int playerright = player.X() + player.Width();
 	const int playerbottom = player.Y() + player.Height();
-	const int enemyright = x + Width();
-	const int enemybottom = y + Height();
+	const int enemyright = pos.x + Width();
+	const int enemybottom = pos.y + Height();
 
-	return (playerright >= x) &&
+	return (playerright >= pos.x) &&
 		(player.X() <= enemyright) &&
-		(playerbottom >= y) &&
+		(playerbottom >= pos.y) &&
 		(player.Y() <= enemybottom);
 }

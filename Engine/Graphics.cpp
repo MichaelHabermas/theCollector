@@ -308,7 +308,23 @@ void Graphics::DrawRect(int x, int y, int width = 20, int height = 20, Color col
 	}
 }
 
+void Graphics::DrawCircle(int x, int y, int radius, Color color)
+{
+	const int radSqu = radius * radius;
 
+	for (int i = y - radius; i < y + radius + 1; i++)
+	{
+		for (int j = x - radius; j < x + radius + 1; j++)
+		{
+			const int xDiff = x - j;
+			const int yDiff = y - i;
+			if ( (xDiff * xDiff) + (yDiff * yDiff) <= radSqu )
+			{
+				PutPixel(j, i, color);
+			}
+		}
+	}
+}
 
 //////////////////////////////////////////////////
 //           Graphics Exception

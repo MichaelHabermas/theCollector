@@ -22,8 +22,7 @@ class Enemy
 		bool Collision( const Player& player );
 
 	private:
-		int x = 100;
-		int y = 100;
+		Vec2i pos{ 100, 100 };
 		int v_x = 1;
 		int v_y = 1;
 		int width = 40;

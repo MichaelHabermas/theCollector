@@ -38,6 +38,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawRect(int x, int y, int width, int height, Color color);
+	void DrawCircle(int x, int y, int radius, Color color);
 
 	~Graphics();
 private:

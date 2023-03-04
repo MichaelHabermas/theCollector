@@ -51,6 +51,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	gfx.DrawCircle( 300, 350, 100, Colors::Magenta );
 	player.Draw( gfx );
 	coin.Draw( gfx );
 

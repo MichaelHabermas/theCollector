@@ -15,30 +15,30 @@ void Player::Update(const Keyboard& kbd)
 {
 	if (kbd.KeyIsPressed(VK_RIGHT))
 	{
-		x += speed;
+		pos.x += speed;
 	}
 	if (kbd.KeyIsPressed(VK_LEFT))
 	{
-		x -= speed;
+		pos.x -= speed;
 	}
 	if (kbd.KeyIsPressed(VK_UP))
 	{
-		y -= speed;
+		pos.y -= speed;
 	}
 	if (kbd.KeyIsPressed(VK_DOWN))
 	{
-		y += speed;
+		pos.y += speed;
 	}
 }
 
 int Player::X() const
 {
-	return this->x;
+	return this->pos.x;
 }
 
 int Player::Y() const
 {
-	return this->y;
+	return this->pos.y;
 }
 
 int Player::Width() const
@@ -58,20 +58,20 @@ Color Player::GetColor() const
 
 void Player::Clamp()
 {
-	if (x + width > Graphics::ScreenWidth)
+	if (pos.x + width > Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth - width - 1;
+		pos.x = Graphics::ScreenWidth - width - 1;
 	}
-	if (x < 0)
+	if (pos.x < 0)
 	{
-		x = 0;
+		pos.x = 0;
 	}
-	if (y + height > Graphics::ScreenHeight)
+	if (pos.y + height > Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - height - 1;
+		pos.y = Graphics::ScreenHeight - height - 1;
 	}
-	if (y < 0)
+	if (pos.y < 0)
 	{
-		y = 0;
+		pos.y = 0;
 	}
 }

@@ -21,8 +21,7 @@ class Coin
 		void Respawn( int x, int y );
 
 	private:
-		int x;
-		int y;
+		Vec2i pos;
 		int width = 15;
 		int height = 15;
 		Color color = Colors::Yellow;

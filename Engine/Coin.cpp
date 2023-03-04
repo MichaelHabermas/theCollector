@@ -2,8 +2,8 @@
 
 Coin::Coin(int x, int y )
 {
-	this->x = x;
-	this->y = y;
+	this->pos.x = x;
+	this->pos.y = y;
 }
 
 void Coin::Draw(Graphics& gfx) const
@@ -17,12 +17,12 @@ void Coin::Update()
 
 int Coin::X() const
 {
-	return this->x;
+	return this->pos.x;
 }
 
 int Coin::Y() const
 {
-	return this->y;
+	return this->pos.y;
 }
 
 int Coin::Width() const
@@ -49,17 +49,17 @@ bool Coin::Collision(const Player& player) const
 {
 	const int playerright = player.X() + player.Width();
 	const int playerbottom = player.Y() + player.Height();
-	const int coinright = x + Width();
-	const int coinbottom = y + Height();
+	const int coinright = pos.x + Width();
+	const int coinbottom = pos.y + Height();
 
-	return (playerright >= x) &&
+	return (playerright >= pos.x) &&
 		(player.X() <= coinright) &&
-		(playerbottom >= y) &&
+		(playerbottom >= pos.y) &&
 		(player.Y() <= coinbottom);
 }
 
 void Coin::Respawn(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	this->pos.x = x;
+	this->pos.y = y;
 }
