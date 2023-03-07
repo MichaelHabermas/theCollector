@@ -13,6 +13,7 @@ class Enemy
 	void Draw( Graphics& gfx ) const;
 	void Update();
 	int X() const;
+int X() const;
 	int Y() const;
 	int Width() const;
 	int Height() const;
