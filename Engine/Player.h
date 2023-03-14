@@ -8,21 +8,22 @@
 class Player
 {
 	public:
-		Player();
+	Player();
 
-		void Draw( Graphics& gfx ) const;
-		void Update( const Keyboard& kbd );
-		int X() const;
-		int Y() const;
-		int Width() const;
-		int Height() const;
-		Color GetColor() const;
-		void Clamp();
+	void Draw( Graphics& gfx ) const;
+	void Update( const Keyboard& kbd );
+	int X() const;
+	int Y() const;
+	int Width() const;
+	int Height() const;
+	Color GetColor() const;
+	void Clamp();
 
 	private:
-		Vec2i pos{ 400, 300 };
-		int speed = 5;
-		int width = 30;
-		int height = 30;
-		Color color = Colors::White;
+	Vec2i pos { 400, 300 };
+	int speed = 5;
+	int width = 30;
+	int height = 30;
+	Color color = Colors::White;
+	Surface sprite = Surface( "SmileSprite.bmp" );
 };

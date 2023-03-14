@@ -12,15 +12,15 @@ Game::Game( MainWindow& wnd )
 	coin( xDist( rng ), yDist( rng ) )
 {
 	Player player = Player();
-	for (int i = 0; i < numOfEnemies; i++)
+	for ( int i = 0; i < numOfEnemies; i++ )
 	{
-		enemies[i].Init(xDist(rng), yDist(rng), 6, 6);
+		enemies[i].Init( xDist( rng ), yDist( rng ), 6, 6 );
 	}
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -28,20 +28,20 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!isGameOver)
+	if ( !isGameOver )
 	{
 		player.Update( wnd.kbd );
 		player.Clamp();
 
-		if (coin.Collision( player ))
+		if ( coin.Collision( player ) )
 		{
-			coin.Respawn(xDist(rng), yDist(rng));
+			coin.Respawn( xDist( rng ), yDist( rng ) );
 		}
 
-		for (int i = 0; i < numOfEnemies; i++)
+		for ( int i = 0; i < numOfEnemies; i++ )
 		{
 			enemies[i].Update();
-			if (enemies[i].Collision( player ))
+			if ( enemies[i].Collision( player ) )
 			{
 				isGameOver = true;
 			}
@@ -55,8 +55,8 @@ void Game::ComposeFrame()
 	player.Draw( gfx );
 	coin.Draw( gfx );
 
-	for (int i = 0; i < numOfEnemies; i++)
+	for ( int i = 0; i < numOfEnemies; i++ )
 	{
-		enemies[i].Draw(gfx);
+		enemies[i].Draw( gfx );
 	}
 }

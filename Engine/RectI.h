@@ -22,5 +22,4 @@ struct RectI
 	int right;
 	int top;
 	int bottom;
-
 };

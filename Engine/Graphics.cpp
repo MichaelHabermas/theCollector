@@ -46,9 +46,9 @@ Graphics::Graphics( HWNDKey& key )
 	createFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 #endif
-	
+
 	// create device and front/back buffers
-	if( FAILED( hr = D3D11CreateDeviceAndSwapChain( 
+	if ( FAILED( hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
@@ -62,31 +62,31 @@ Graphics::Graphics( HWNDKey& key )
 		nullptr,
 		&pImmediateContext ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating device and swap chain" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating device and swap chain" );
 	}
 
 	// get handle to backbuffer
 	ComPtr<ID3D11Resource> pBackBuffer;
-	if( FAILED( hr = pSwapChain->GetBuffer(
+	if ( FAILED( hr = pSwapChain->GetBuffer(
 		0,
 		__uuidof( ID3D11Texture2D ),
-		(LPVOID*)&pBackBuffer ) ) )
+		( LPVOID* ) &pBackBuffer ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Getting back buffer" );
+		throw DSA_GFX_EXCEPTION( hr, L"Getting back buffer" );
 	}
 
 	// create a view on backbuffer that we can render to
-	if( FAILED( hr = pDevice->CreateRenderTargetView( 
+	if ( FAILED( hr = pDevice->CreateRenderTargetView(
 		pBackBuffer.Get(),
 		nullptr,
 		&pRenderTargetView ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating render target view on backbuffer" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating render target view on backbuffer" );
 	}
 
 
 	// set backbuffer as the render target using created view
-	pImmediateContext->OMSetRenderTargets( 1,pRenderTargetView.GetAddressOf(),nullptr );
+	pImmediateContext->OMSetRenderTargets( 1, pRenderTargetView.GetAddressOf(), nullptr );
 
 
 	// set viewport dimensions
@@ -97,7 +97,7 @@ Graphics::Graphics( HWNDKey& key )
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0.0f;
 	vp.TopLeftY = 0.0f;
-	pImmediateContext->RSSetViewports( 1,&vp );
+	pImmediateContext->RSSetViewports( 1, &vp );
 
 
 	///////////////////////////////////////
@@ -115,9 +115,9 @@ Graphics::Graphics( HWNDKey& key )
 	sysTexDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	sysTexDesc.MiscFlags = 0;
 	// create the texture
-	if( FAILED( hr = pDevice->CreateTexture2D( &sysTexDesc,nullptr,&pSysBufferTexture ) ) )
+	if ( FAILED( hr = pDevice->CreateTexture2D( &sysTexDesc, nullptr, &pSysBufferTexture ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating sysbuffer texture" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating sysbuffer texture" );
 	}
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
@@ -125,38 +125,38 @@ Graphics::Graphics( HWNDKey& key )
 	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
 	// create the resource view on the texture
-	if( FAILED( hr = pDevice->CreateShaderResourceView( pSysBufferTexture.Get(),
-		&srvDesc,&pSysBufferTextureView ) ) )
+	if ( FAILED( hr = pDevice->CreateShaderResourceView( pSysBufferTexture.Get(),
+		&srvDesc, &pSysBufferTextureView ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating view on sysBuffer texture" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating view on sysBuffer texture" );
 	}
 
 
 	////////////////////////////////////////////////
 	// create pixel shader for framebuffer
 	// Ignore the intellisense error "namespace has no member"
-	if( FAILED( hr = pDevice->CreatePixelShader(
+	if ( FAILED( hr = pDevice->CreatePixelShader(
 		FramebufferShaders::FramebufferPSBytecode,
 		sizeof( FramebufferShaders::FramebufferPSBytecode ),
 		nullptr,
 		&pPixelShader ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating pixel shader" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating pixel shader" );
 	}
-	
+
 
 	/////////////////////////////////////////////////
 	// create vertex shader for framebuffer
 	// Ignore the intellisense error "namespace has no member"
-	if( FAILED( hr = pDevice->CreateVertexShader(
+	if ( FAILED( hr = pDevice->CreateVertexShader(
 		FramebufferShaders::FramebufferVSBytecode,
 		sizeof( FramebufferShaders::FramebufferVSBytecode ),
 		nullptr,
 		&pVertexShader ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating vertex shader" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating vertex shader" );
 	}
-	
+
 
 	//////////////////////////////////////////////////////////////
 	// create and fill vertex buffer with quad for rendering frame
@@ -176,12 +176,12 @@ Graphics::Graphics( HWNDKey& key )
 	bd.CPUAccessFlags = 0u;
 	D3D11_SUBRESOURCE_DATA initData = {};
 	initData.pSysMem = vertices;
-	if( FAILED( hr = pDevice->CreateBuffer( &bd,&initData,&pVertexBuffer ) ) )
+	if ( FAILED( hr = pDevice->CreateBuffer( &bd, &initData, &pVertexBuffer ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating vertex buffer" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating vertex buffer" );
 	}
 
-	
+
 	//////////////////////////////////////////
 	// create input layout for fullscreen quad
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
@@ -191,12 +191,12 @@ Graphics::Graphics( HWNDKey& key )
 	};
 
 	// Ignore the intellisense error "namespace has no member"
-	if( FAILED( hr = pDevice->CreateInputLayout( ied,2,
+	if ( FAILED( hr = pDevice->CreateInputLayout( ied, 2,
 		FramebufferShaders::FramebufferVSBytecode,
 		sizeof( FramebufferShaders::FramebufferVSBytecode ),
 		&pInputLayout ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating input layout" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating input layout" );
 	}
 
 
@@ -210,26 +210,26 @@ Graphics::Graphics( HWNDKey& key )
 	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 	sampDesc.MinLOD = 0;
 	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
-	if( FAILED( hr = pDevice->CreateSamplerState( &sampDesc,&pSamplerState ) ) )
+	if ( FAILED( hr = pDevice->CreateSamplerState( &sampDesc, &pSamplerState ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Creating sampler state" );
+		throw DSA_GFX_EXCEPTION( hr, L"Creating sampler state" );
 	}
 
 	// allocate memory for sysbuffer (16-byte aligned for faster access)
-	pSysBuffer = reinterpret_cast<Color*>( 
-		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
+	pSysBuffer = reinterpret_cast< Color* >(
+		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight, 16u ) );
 }
 
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
-	if( pSysBuffer )
+	if ( pSysBuffer )
 	{
 		_aligned_free( pSysBuffer );
 		pSysBuffer = nullptr;
 	}
 	// clear the state of the device context before destruction
-	if( pImmediateContext ) pImmediateContext->ClearState();
+	if ( pImmediateContext ) pImmediateContext->ClearState();
 }
 
 void Graphics::EndFrame()
@@ -237,46 +237,46 @@ void Graphics::EndFrame()
 	HRESULT hr;
 
 	// lock and map the adapter memory for copying over the sysbuffer
-	if( FAILED( hr = pImmediateContext->Map( pSysBufferTexture.Get(),0u,
-		D3D11_MAP_WRITE_DISCARD,0u,&mappedSysBufferTexture ) ) )
+	if ( FAILED( hr = pImmediateContext->Map( pSysBufferTexture.Get(), 0u,
+		D3D11_MAP_WRITE_DISCARD, 0u, &mappedSysBufferTexture ) ) )
 	{
-		throw DSA_GFX_EXCEPTION( hr,L"Mapping sysbuffer" );
+		throw DSA_GFX_EXCEPTION( hr, L"Mapping sysbuffer" );
 	}
 	// setup parameters for copy operation
-	Color* pDst = reinterpret_cast<Color*>(mappedSysBufferTexture.pData );
+	Color* pDst = reinterpret_cast< Color* >( mappedSysBufferTexture.pData );
 	const size_t dstPitch = mappedSysBufferTexture.RowPitch / sizeof( Color );
 	const size_t srcPitch = Graphics::ScreenWidth;
 	const size_t rowBytes = srcPitch * sizeof( Color );
 	// perform the copy line-by-line
-	for( size_t y = 0u; y < Graphics::ScreenHeight; y++ )
+	for ( size_t y = 0u; y < Graphics::ScreenHeight; y++ )
 	{
-		memcpy( &pDst[ y * dstPitch ],&pSysBuffer[y * srcPitch],rowBytes );
+		memcpy( &pDst[y * dstPitch], &pSysBuffer[y * srcPitch], rowBytes );
 	}
 	// release the adapter memory
-	pImmediateContext->Unmap( pSysBufferTexture.Get(),0u );
+	pImmediateContext->Unmap( pSysBufferTexture.Get(), 0u );
 
 	// render offscreen scene texture to back buffer
 	pImmediateContext->IASetInputLayout( pInputLayout.Get() );
-	pImmediateContext->VSSetShader( pVertexShader.Get(),nullptr,0u );
-	pImmediateContext->PSSetShader( pPixelShader.Get(),nullptr,0u );
+	pImmediateContext->VSSetShader( pVertexShader.Get(), nullptr, 0u );
+	pImmediateContext->PSSetShader( pPixelShader.Get(), nullptr, 0u );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 	const UINT stride = sizeof( FSQVertex );
 	const UINT offset = 0u;
-	pImmediateContext->IASetVertexBuffers( 0u,1u,pVertexBuffer.GetAddressOf(),&stride,&offset );
-	pImmediateContext->PSSetShaderResources( 0u,1u,pSysBufferTextureView.GetAddressOf() );
-	pImmediateContext->PSSetSamplers( 0u,1u,pSamplerState.GetAddressOf() );
-	pImmediateContext->Draw( 6u,0u );
+	pImmediateContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
+	pImmediateContext->PSSetShaderResources( 0u, 1u, pSysBufferTextureView.GetAddressOf() );
+	pImmediateContext->PSSetSamplers( 0u, 1u, pSamplerState.GetAddressOf() );
+	pImmediateContext->Draw( 6u, 0u );
 
 	// flip back/front buffers
-	if( FAILED( hr = pSwapChain->Present( 1u,0u ) ) )
+	if ( FAILED( hr = pSwapChain->Present( 1u, 0u ) ) )
 	{
-		if( hr == DXGI_ERROR_DEVICE_REMOVED )
+		if ( hr == DXGI_ERROR_DEVICE_REMOVED )
 		{
-			throw DSA_GFX_EXCEPTION( pDevice->GetDeviceRemovedReason(),L"Presenting back buffer [device removed]" );
+			throw DSA_GFX_EXCEPTION( pDevice->GetDeviceRemovedReason(), L"Presenting back buffer [device removed]" );
 		}
 		else
 		{
-			throw DSA_GFX_EXCEPTION( hr,L"Presenting back buffer" );
+			throw DSA_GFX_EXCEPTION( hr, L"Presenting back buffer" );
 		}
 	}
 }
@@ -284,10 +284,10 @@ void Graphics::EndFrame()
 void Graphics::BeginFrame()
 {
 	// clear the sysbuffer
-	memset( pSysBuffer,0u,sizeof( Color ) * Graphics::ScreenHeight * Graphics::ScreenWidth );
+	memset( pSysBuffer, 0u, sizeof( Color ) * Graphics::ScreenHeight * Graphics::ScreenWidth );
 }
 
-void Graphics::PutPixel( int x,int y,Color c )
+void Graphics::PutPixel( int x, int y, Color c )
 {
 	assert( x >= 0 );
 	assert( x < int( Graphics::ScreenWidth ) );
@@ -297,42 +297,91 @@ void Graphics::PutPixel( int x,int y,Color c )
 }
 
 
-void Graphics::DrawRect(int x, int y, int width = 20, int height = 20, Color color = Colors::White)
+void Graphics::DrawRect( int x, int y, int width = 20, int height = 20, Color color = Colors::White )
 {
-	for (int w = x; w < width + x; w++)
+	for ( int w = x; w < width + x; w++ )
 	{
-		for (int h = y; h < height + y; h++)
+		for ( int h = y; h < height + y; h++ )
 		{
-			PutPixel(w, h, color);
+			PutPixel( w, h, color );
 		}
 	}
 }
 
-void Graphics::DrawCircle(int x, int y, int radius, Color color)
+void Graphics::DrawCircle( int x, int y, int radius, Color color )
 {
 	const int radSqu = radius * radius;
 
-	for (int i = y - radius; i < y + radius + 1; i++)
+	for ( int i = y - radius; i < y + radius + 1; i++ )
 	{
-		for (int j = x - radius; j < x + radius + 1; j++)
+		for ( int j = x - radius; j < x + radius + 1; j++ )
 		{
 			const int xDiff = x - j;
 			const int yDiff = y - i;
-			if ( (xDiff * xDiff) + (yDiff * yDiff) <= radSqu )
+			if ( ( xDiff * xDiff ) + ( yDiff * yDiff ) <= radSqu )
 			{
-				PutPixel(j, i, color);
+				PutPixel( j, i, color );
 			}
 		}
 	}
 }
 
+void Graphics::DrawSprite( int x, int y, RectI recti, const RectI& clip, const Surface& surface, Color chroma )
+{
+	if ( x < clip.left )
+	{
+		recti.left += clip.left - x;
+		x = clip.left;
+	}
+	if ( y < clip.top )
+	{
+		recti.top += clip.top - y;
+		y = clip.top;
+	}
+	if ( x + recti.GetWidth() > clip.right )
+	{
+		recti.right -= x + recti.GetWidth() - clip.right;
+	}
+	if ( y + recti.GetHeight() > clip.bottom )
+	{
+		recti.bottom -= y + recti.GetHeight() - clip.bottom;
+	}
+
+	for ( int sy = recti.top; sy < recti.bottom; sy++ )
+	{
+		for ( int sx = recti.left; sx < recti.right; sx++ )
+		{
+			if ( surface.GetPixel( sx, sy ) != Colors::Magenta )
+			{
+				PutPixel( x + sx - recti.left, y + sy - recti.top, surface.GetPixel( sx, sy ) );
+			}
+		}
+	}
+}
+
+void Graphics::DrawSprite( int x, int y, const RectI& recti, const Surface& surface, Color chroma )
+{
+	DrawSprite( x, y, recti, GetScreenRect(), surface, chroma );
+}
+
+void Graphics::DrawSprite( int x, int y, const Surface& surface, Color chroma )
+{
+	DrawSprite( x, y, surface.GetRect(), surface, chroma );
+}
+
+RectI Graphics::GetScreenRect() const
+{
+	return { 0, ScreenWidth, 0 , ScreenHeight };
+}
+
 //////////////////////////////////////////////////
 //           Graphics Exception
-Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )
+Graphics::Exception::Exception( HRESULT hr, const std::wstring& note, const wchar_t* file, unsigned int line )
 	:
-	DsaException( file,line,note ),
+	DsaException( file, line, note ),
 	hr( hr )
-{}
+{
+}
 
 std::wstring Graphics::Exception::GetFullMessage() const
 {
@@ -341,14 +390,15 @@ std::wstring Graphics::Exception::GetFullMessage() const
 	const std::wstring errorDesc = GetErrorDescription();
 	const std::wstring& note = GetNote();
 	const std::wstring location = GetLocation();
-	return    (!errorName.empty() ? std::wstring( L"Error: " ) + errorName + L"\n"
-		: empty)
-		+ (!errorDesc.empty() ? std::wstring( L"Description: " ) + errorDesc + L"\n"
-			: empty)
-		+ (!note.empty() ? std::wstring( L"Note: " ) + note + L"\n"
-			: empty)
-		+ (!location.empty() ? std::wstring( L"Location: " ) + location
-			: empty);
+
+	return    ( !errorName.empty() ? std::wstring( L"Error: " ) + errorName + L"\n"
+		: empty )
+		+ ( !errorDesc.empty() ? std::wstring( L"Description: " ) + errorDesc + L"\n"
+			: empty )
+		+ ( !note.empty() ? std::wstring( L"Note: " ) + note + L"\n"
+			: empty )
+		+ ( !location.empty() ? std::wstring( L"Location: " ) + location
+			: empty );
 }
 
 std::wstring Graphics::Exception::GetErrorName() const
@@ -358,8 +408,8 @@ std::wstring Graphics::Exception::GetErrorName() const
 
 std::wstring Graphics::Exception::GetErrorDescription() const
 {
-	std::array<wchar_t,512> wideDescription;
-	DXGetErrorDescription( hr,wideDescription.data(),wideDescription.size() );
+	std::array<wchar_t, 512> wideDescription;
+	DXGetErrorDescription( hr, wideDescription.data(), wideDescription.size() );
 	return wideDescription.data();
 }
 
