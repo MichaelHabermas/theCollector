@@ -24,21 +24,25 @@ void Enemy::Update()
 	{
 		pos.x = 0;
 		v_x = -v_x;
+		boing.Play();
 	}
 	if ( enemyright > Graphics::ScreenWidth )
 	{
 		pos.x = Graphics::ScreenWidth - 1 - width;
 		v_x = -v_x;
+		boing.Play();
 	}
 	if ( pos.y < 0 )
 	{
 		pos.y = 0;
 		v_y = -v_y;
+		boing.Play();
 	}
 	if ( enemybottom > Graphics::ScreenHeight )
 	{
 		pos.y = Graphics::ScreenHeight - 1 - height;
 		v_y = -v_y;
+		boing.Play();
 	}
 }
 

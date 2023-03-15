@@ -3,6 +3,7 @@
 #include "Colors.h"
 #include "Graphics.h"
 #include "Player.h"
+#include "Sound.h"
 #include <assert.h>
 
 class Enemy
@@ -29,4 +30,5 @@ class Enemy
 	int height = 40;
 	Color color = Colors::Red;
 	bool initialized = false;
+	Sound boing = Sound( L"Sound\\boing.wav" );
 };

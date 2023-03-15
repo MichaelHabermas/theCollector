@@ -21,7 +21,7 @@ RectI::RectI( const Vec2i& topLeft, int width, int height ) :
 bool RectI::isOverlappingWith( const RectI& other ) const
 {
 	return left > other.left &&
-		right < other.right&&
+		right < other.right &&
 		top > other.top &&
 		bottom < other.bottom;
 }

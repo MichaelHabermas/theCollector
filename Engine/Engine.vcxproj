@@ -152,6 +152,9 @@
   <ItemGroup>
     <Image Include="SmileSprite.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\boing.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
