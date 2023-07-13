@@ -30,5 +30,5 @@ class Enemy
 	int height = 40;
 	Color color = Colors::Red;
 	bool initialized = false;
-	Sound boing = Sound( L"Sound\\boing.wav" );
+	Sound boing = Sound( L"Game\\Res\\Sound\\boing.wav" );
 };

@@ -5,6 +5,7 @@
 #include "DsaException.h"
 #include "Colors.h"
 #include "Surface.h"
+#include "Rectf.h"
 
 class Graphics
 {
@@ -42,6 +43,7 @@ class Graphics
 	}
 	void PutPixel( int x, int y, Color c );
 	void DrawRect( int x, int y, int width, int height, Color color );
+	void DrawRect( const Rectf& rect, Color color );
 	void DrawCircle( int x, int y, int radius, Color color );
 	void DrawSprite( int x, int y, RectI recti, const RectI& clip, const Surface& surface, Color chroma = Colors::Magenta );
 	void DrawSprite( int x, int y, const RectI& recti, const Surface& surface, Color chroma = Colors::Magenta );

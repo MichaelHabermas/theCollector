@@ -41,7 +41,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir)Game\Includes;$(ProjectDir)Includes;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir)Game\Includes;$(ProjectDir)Includes;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -75,41 +80,49 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Coin.h" />
-    <ClInclude Include="DsaException.h" />
-    <ClInclude Include="DsaWin.h" />
-    <ClInclude Include="Colors.h" />
-    <ClInclude Include="COMInitializer.h" />
-    <ClInclude Include="DXErr.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Graphics.h" />
-    <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="MainWindow.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="RectI.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="SoundEffect.h" />
-    <ClInclude Include="Surface.h" />
-    <ClInclude Include="Vec2i.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="Brick.h" />
+    <ClInclude Include="Game\Includes\Coin.h" />
+    <ClInclude Include="Includes\DsaException.h" />
+    <ClInclude Include="Includes\DsaWin.h" />
+    <ClInclude Include="Includes\Colors.h" />
+    <ClInclude Include="Includes\COMInitializer.h" />
+    <ClInclude Include="Includes\DXErr.h" />
+    <ClInclude Include="Game\Includes\Enemy.h" />
+    <ClInclude Include="Includes\Game.h" />
+    <ClInclude Include="Includes\Graphics.h" />
+    <ClInclude Include="Includes\Keyboard.h" />
+    <ClInclude Include="Includes\MainWindow.h" />
+    <ClInclude Include="Includes\Mouse.h" />
+    <ClInclude Include="Game\Includes\Player.h" />
+    <ClInclude Include="Includes\Rectf.h" />
+    <ClInclude Include="Includes\RectI.h" />
+    <ClInclude Include="Includes\Resource.h" />
+    <ClInclude Include="Includes\Sound.h" />
+    <ClInclude Include="Includes\SoundEffect.h" />
+    <ClInclude Include="Includes\Surface.h" />
+    <ClInclude Include="Includes\Vec2f.h" />
+    <ClInclude Include="Includes\Vec2i.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Game\Coin.cpp" />
     <ClCompile Include="COMInitializer.cpp" />
     <ClCompile Include="DXErr.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Rectf.cpp" />
     <ClCompile Include="RectI.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="Vec2f.cpp" />
     <ClCompile Include="Vec2i.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,10 +163,10 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="SmileSprite.bmp" />
+    <Image Include="Game\Res\Sprites\SmileSprite.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Sound\boing.wav" />
+    <Media Include="Game\Res\Sound\boing.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

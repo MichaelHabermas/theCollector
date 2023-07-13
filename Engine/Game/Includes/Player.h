@@ -25,5 +25,5 @@ class Player
 	int width = 30;
 	int height = 30;
 	Color color = Colors::White;
-	Surface sprite = Surface( "SmileSprite.bmp" );
+	Surface sprite = Surface( "Game\\Res\\Sprites\\SmileSprite.bmp" );
 };

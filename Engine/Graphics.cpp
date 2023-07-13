@@ -308,6 +308,11 @@ void Graphics::DrawRect( int x, int y, int width = 20, int height = 20, Color co
 	}
 }
 
+void Graphics::DrawRect( const Rectf& rect, Color color )
+{
+	DrawRect( int( rect.left ), int( rect.top ), int( rect.right ), int( rect.bottom ), color );
+}
+
 void Graphics::DrawCircle( int x, int y, int radius, Color color )
 {
 	const int radSqu = radius * radius;

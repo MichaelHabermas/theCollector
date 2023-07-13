@@ -5,6 +5,7 @@
 #include "Graphics.h"
 #include "Player.h"
 #include "Coin.h"
+#include "Ball.h"
 #include "Enemy.h"
 #include <random>
 
@@ -35,6 +36,7 @@ class Game
 	std::uniform_int_distribution<int> yDist;
 
 	Player player;
+	Ball ball;
 
 	Coin coin;
 
